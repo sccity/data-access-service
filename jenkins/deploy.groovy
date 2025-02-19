@@ -3,10 +3,14 @@ withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
     commit_hash=$(cat commit_hash.txt)
     branch=$(cat branch.txt)
 
+    namespace="webprod"
+    container="das"
+    image="sccity/das"
+
     if [ "$branch" = "dev" ]; then
-        DEPLOYMENT="<dev/uat deployment>"
+        DEPLOYMENT="das-uat"
     elif [ "$branch" = "prod" ]; then
-        DEPLOYMENT="<prod deployment>"
+        DEPLOYMENT="das"
     else
         echo "Error: Unknown branch '$branch'. Skipping deployment."
         exit 1
@@ -15,17 +19,23 @@ withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
 
-    ./kubectl --kubeconfig $KUBECONFIG set image deployment/$DEPLOYMENT <container>=sccity/<image>:$commit_hash -n <namespace>
+    ./kubectl get deployments -n $namespace
+
+    ./kubectl -n $namespace \
+        set image "deployment/$DEPLOYMENT" \
+        "$container=$image:$commit_hash-$branch"
 
     if [ $? -ne 0 ]; then
-        echo "Error: Kubernetes update failed!"
+        echo "Error: Kubernetes Update Failed!"
         exit 1
     fi
 
-    ./kubectl --kubeconfig $KUBECONFIG rollout status deployment/$DEPLOYMENT -n <namespace>
+    ./kubectl -n $namespace \
+        rollout status deployment/$DEPLOYMENT \
+        -n $namespace
 
     if [ $? -ne 0 ]; then
-        echo "Error: Kubernetes rollout failed!"
+        echo "Error: Kubernetes Rollout Failed!"
         exit 1
     fi
     '''
