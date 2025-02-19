@@ -6,4 +6,6 @@ php artisan db:seed
 if [ $? -eq 0 ]; then
     ./clean.sh
 fi
+
+rm -fR .env
 '''
