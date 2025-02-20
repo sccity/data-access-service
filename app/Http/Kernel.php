@@ -28,20 +28,27 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // API middleware group
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
     /**
-     * The application's route middleware aliases.
-     *
-     * Aliases may be used instead of class names to assign middleware to routes and groups.
+     * The application's middleware aliases.
      *
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
-        // ... other middleware
-        'check.token' => \App\Http\Middleware\CheckToken::class,
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed' => \App\Http\Middleware\ValidateSignature::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
     /**
@@ -53,5 +60,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         // ... other route middleware
+        'token' => \App\Http\Middleware\CheckToken::class,
     ];
 } 

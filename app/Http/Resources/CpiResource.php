@@ -4,13 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FredResource extends JsonResource
+class CpiResource extends JsonResource
 {
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'date' => $this->date,
+            'date' => $this->date->format('Y-m-d'),
             'cpi' => $this->cpi,
         ];
     }

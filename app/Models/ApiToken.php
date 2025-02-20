@@ -10,7 +10,8 @@ class ApiToken extends Model
         'name',
         'token',
         'permissions', // Stored as JSON
-        'expires_at'
+        'expires_at',
+        'user_id'
     ];
 
     protected $casts = [
@@ -18,9 +19,27 @@ class ApiToken extends Model
         'expires_at' => 'datetime'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function hasPermission(string $endpoint, string $ability): bool
     {
-        return isset($this->permissions[$endpoint]) && 
-               in_array($ability, $this->permissions[$endpoint]);
+        // Ensure permissions is an array
+        $permissions = is_array($this->permissions) ? $this->permissions : [];
+        
+        // Check if endpoint exists in permissions
+        if (!isset($permissions[$endpoint])) {
+            return false;
+        }
+
+        // Check if ability exists in endpoint permissions
+        $endpointPermissions = $permissions[$endpoint];
+        if (!is_array($endpointPermissions)) {
+            return false;
+        }
+
+        return in_array($ability, $endpointPermissions);
     }
 } 

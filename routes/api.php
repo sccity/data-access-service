@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\FredController;
+use App\Http\Controllers\Api\CpiController;
+use App\Http\Middleware\CheckToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,15 @@ use App\Http\Controllers\Api\FredController;
 |
 */
 
-// Your Orion API routes will go here 
+Route::middleware('api')->group(function () {
+    // Your Orion API routes will go here 
+    Route::middleware(CheckToken::class)->group(function () {
+        Orion::resource('users', UserController::class);
+        Orion::resource('cpi', CpiController::class);
+    });
 
-Orion::resource('users', UserController::class);
-
-// Add this custom route before the resource route
-Route::get('fred/cpi', [FredController::class, 'cpi'])
-    ->middleware(['check.token', 'auth:api']);
-
-Orion::resource('fred', FredController::class); 
+    // Add this temporary route for debugging
+    Route::get('/debug', function() {
+        return response()->json(['message' => 'API is working']);
+    });
+}); 

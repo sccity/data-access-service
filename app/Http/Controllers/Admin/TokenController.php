@@ -18,8 +18,7 @@ class TokenController extends Controller
     public function createForm()
     {
         $availableEndpoints = [
-            'fred' => ['viewAny', 'view', 'create', 'update', 'delete'],
-            'fred/cpi' => ['viewAny', 'view'],
+            'cpi' => ['viewAny', 'view', 'create', 'update', 'delete'],
             'users' => ['viewAny', 'view', 'create', 'update', 'delete'],
         ];
         
