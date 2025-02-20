@@ -10,7 +10,8 @@ withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
     if [ "$branch" = "dev" ]; then
         DEPLOYMENT="das-uat"
     elif [ "$branch" = "prod" ]; then
-        DEPLOYMENT="das"
+        #DEPLOYMENT="das"
+        exit 0
     else
         echo "Error: Unknown branch '$branch'. Skipping deployment."
         exit 1

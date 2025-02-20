@@ -78,9 +78,9 @@ spec:
                     load './jenkins/image.groovy'
                 }
 
-                //container('jnlp') {
-                //    load './jenkins/deploy.groovy'
-                //}
+                container('jnlp') {
+                    load './jenkins/deploy.groovy'
+                }
             }
         }
         fixed {
