@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Fred;
 
-use App\Models\WarehouseDatabase\Cpi;
 use Orion\Http\Controllers\Controller;
-use App\Http\Resources\CpiResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
+use App\Models\Fred\Cpi;
+use App\Http\Resources\Fred\CpiResource;
 
 class CpiController extends Controller
 {
@@ -53,7 +54,7 @@ class CpiController extends Controller
         ]);
 
         $query = Cpi::query();
-        
+
         if ($request->has('start_date')) {
             $query->where('date', '>=', $request->start_date);
         }
@@ -63,11 +64,11 @@ class CpiController extends Controller
 
         $query->orderBy('date', 'desc');
         $cpiData = $query->get();
-        
+
         Log::info('CPI data retrieved', [
             'count' => $cpiData->count()
         ]);
-        
+
         return CpiResource::collection($cpiData);
     }
-} 
+}

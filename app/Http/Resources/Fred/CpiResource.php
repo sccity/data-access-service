@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Fred;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,4 +13,4 @@ class CpiResource extends JsonResource
             'cpi' => $this->cpi,
         ];
     }
-} 
+}

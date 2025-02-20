@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\WarehouseDatabase;
+namespace App\Models\Fred;
 
 class Cpi extends BaseModel
 {
-    protected $connection = 'warehouse';
+    protected $connection = 'fred';
     protected $table = 'cpi';
-    
+
     protected $fillable = [
         'date',
         'cpi'
@@ -16,4 +16,4 @@ class Cpi extends BaseModel
         'date' => 'date',
         'cpi' => 'float'
     ];
-} 
+}

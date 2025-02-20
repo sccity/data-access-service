@@ -14,7 +14,7 @@ class CheckToken
     {
         // Add debug header to see if middleware is running
         header('X-Debug: CheckToken middleware is running');
-        
+
         Log::info('CheckToken middleware running', [
             'path' => $request->path(),
             'method' => $request->method(),
@@ -65,7 +65,7 @@ class CheckToken
 
         // Set up auth for the request (using first user for now)
         auth()->setUser(User::first());
-        
+
         return $next($request);
     }
 
@@ -73,7 +73,8 @@ class CheckToken
     {
         $path = $request->path();
         // Remove 'api/' prefix if it exists and get the first segment
-        $segments = explode('/', ltrim($path, 'api/'));
+        $path = str_replace('api/', '', $path);
+        $segments = explode('/', $path);
         return $segments[0];
     }
 
@@ -81,13 +82,13 @@ class CheckToken
     {
         $path = $request->path();
         $segments = explode('/', ltrim($path, 'api/'));
-        
+
         // If it's a GET request, check if it's for a single resource
         if ($request->method() === 'GET') {
             // If there's an ID segment, it's a 'view' operation
             return isset($segments[1]) ? 'view' : 'viewAny';
         }
-        
+
         return match ($request->method()) {
             'POST' => 'create',
             'PUT', 'PATCH' => 'update',
@@ -95,4 +96,4 @@ class CheckToken
             default => 'view'
         };
     }
-} 
+}

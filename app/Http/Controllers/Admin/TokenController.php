@@ -18,10 +18,11 @@ class TokenController extends Controller
     public function createForm()
     {
         $availableEndpoints = [
-            'cpi' => ['viewAny', 'view', 'create', 'update', 'delete'],
+            'fred' => ['viewAny', 'view'],
+            'pelorus' => ['viewAny', 'view'],
             'users' => ['viewAny', 'view', 'create', 'update', 'delete'],
         ];
-        
+
         return view('admin.tokens.create', compact('availableEndpoints'));
     }
 
@@ -50,4 +51,4 @@ class TokenController extends Controller
         return redirect()->route('tokens.index')
             ->with('success', 'Token deleted successfully');
     }
-} 
+}

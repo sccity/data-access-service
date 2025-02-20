@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\CpiController;
 use App\Http\Middleware\CheckToken;
 
 /*
@@ -18,14 +17,16 @@ use App\Http\Middleware\CheckToken;
 */
 
 Route::middleware('api')->group(function () {
-    // Your Orion API routes will go here 
-    Route::middleware(CheckToken::class)->group(function () {
-        Orion::resource('users', UserController::class);
-        Orion::resource('cpi', CpiController::class);
+    Route::middleware('api')->group(function () {
+        Route::middleware(CheckToken::class)->group(function () {
+            Orion::resource('users', UserController::class);
+        });
     });
 
-    // Add this temporary route for debugging
     Route::get('/debug', function() {
         return response()->json(['message' => 'API is working']);
     });
-}); 
+});
+
+include __DIR__.'/fred.php';
+include __DIR__.'/pelorus.php';
