@@ -20,12 +20,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@santaclarautah.gov',
             'password' => Hash::make('admin123'),
         ]);
-
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }

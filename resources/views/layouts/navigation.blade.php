@@ -10,15 +10,17 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    
-                    <!-- Add this new nav link -->
-                    <x-nav-link :href="route('tokens.index')" :active="request()->routeIs('tokens.*')">
+
+                    <x-nav-link :href="route('admin.tokens.index')" :active="request()->routeIs('tokens.*')">
                         {{ __('API Tokens') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('users.*')">
+                        {{ __('Users') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -75,10 +77,13 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            
-            <!-- Add this responsive nav link -->
-            <x-responsive-nav-link :href="route('tokens.index')" :active="request()->routeIs('tokens.*')">
+
+            <x-responsive-nav-link :href="route('admin.tokens.index')" :active="request()->routeIs('tokens.*')">
                 {{ __('API Tokens') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('users.*')">
+                {{ __('Users') }}
             </x-responsive-nav-link>
         </div>
 
