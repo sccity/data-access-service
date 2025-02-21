@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Pelorus;
-
-use Orion\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
+namespace App\Http\Controllers\Api\Finance;
 
 use App\Models\Das;
-
 use DateTime;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Orion\Http\Controllers\Controller;
 
 class Pastdue extends Controller
 {
@@ -17,7 +14,6 @@ class Pastdue extends Controller
 
     public function authorize(string $ability, mixed $arguments = []): bool
     {
-
 
         if (in_array($ability, ['viewAny', 'view'])) {
             return true;
@@ -32,14 +28,14 @@ class Pastdue extends Controller
 
     public function index(Request $request)
     {
-        $currentDate = new DateTime();
+        $currentDate = new DateTime;
         $balanceMonth = ($currentDate->format('m') >= 3) ? $currentDate->format('m') - 2 : $currentDate->format('m') + 10;
         $balanceYear = ($currentDate->format('m') >= 3) ? $currentDate->format('Y') : $currentDate->format('Y') - 1;
-        $balanceDate = new DateTime();
+        $balanceDate = new DateTime;
         $balanceDate->setDate($balanceYear, $balanceMonth, 25);
         $balanceDate = $balanceDate->format('Y-m-d');
 
-        $results = DB::connection('pelorus')->select("EXEC [999].[GetAccountBalances] @BalanceDate = ?", [$balanceDate]);
+        $results = DB::connection('finance')->select('EXEC [999].[GetAccountBalances] @BalanceDate = ?', [$balanceDate]);
 
         $collection = collect($results);
         $data = [

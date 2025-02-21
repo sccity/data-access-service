@@ -19,7 +19,7 @@ class TokenController extends Controller
     {
         $availableEndpoints = [
             'fred' => ['viewAny', 'view'],
-            'pelorus' => ['viewAny', 'view'],
+            'finance' => ['viewAny', 'view'],
             'users' => ['viewAny', 'view', 'create', 'update', 'delete'],
         ];
 

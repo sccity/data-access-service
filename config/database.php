@@ -97,13 +97,13 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'pelorus' => [
+        'finance' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_PELORUS_HOST', 'localhost'),
-            'port' => env('DB_PELORUS_PORT', ''),
-            'database' => env('DB_PELORUS_DATABASE', 'forge'),
-            'username' => env('DB_PELORUS_USERNAME', 'forge'),
-            'password' => env('DB_PELORUS_PASSWORD', ''),
+            'host' => env('DB_FINANCE_HOST', 'localhost'),
+            'port' => env('DB_FINANCE_PORT', ''),
+            'database' => env('DB_FINANCE_DATABASE', 'forge'),
+            'username' => env('DB_FINANCE_USERNAME', 'forge'),
+            'password' => env('DB_FINANCE_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
