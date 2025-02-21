@@ -31,9 +31,8 @@ RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get -y --no-install-recommends install msodbcsql17 unixodbc-dev
 RUN pecl install sqlsrv
 RUN pecl install pdo_sqlsrv
-RUN echo "extension=sqlsrv.so" > /etc/php/8.2/mods-available/sqlsrv.ini && \
-    echo "extension=pdo_sqlsrv.so" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini && \
-    phpenmod sqlsrv pdo_sqlsrv
+RUN docker-php-ext-enable sqlsrv
+RUN docker-php-ext-enable pdo_sqlsrv
 
 RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini \
     && echo "error_reporting = E_ALL" > /usr/local/etc/php/conf.d/error-logging.ini \
