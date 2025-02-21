@@ -1,4 +1,7 @@
 FROM --platform=linux/x86_64 php:8.3-fpm
+
+ENV ACCEPT_EULA=Y
+
 RUN apt-get update && apt-get install -y \
     nginx \
     build-essential \
@@ -13,12 +16,24 @@ RUN apt-get update && apt-get install -y \
     curl \
     nano \
     libicu-dev \
+    gpg \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd mbstring zip pdo pdo_mysql intl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 && apt-get install -y nodejs
+
+RUN apt-get update && apt-get install -y gnupg2
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get -y --no-install-recommends install msodbcsql17 unixodbc-dev
+RUN pecl install sqlsrv
+RUN pecl install pdo_sqlsrv
+RUN echo "extension=sqlsrv.so" > /etc/php/8.2/mods-available/sqlsrv.ini && \
+    echo "extension=pdo_sqlsrv.so" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini && \
+    phpenmod sqlsrv pdo_sqlsrv
 
 RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini \
     && echo "error_reporting = E_ALL" > /usr/local/etc/php/conf.d/error-logging.ini \
@@ -41,12 +56,6 @@ RUN mkdir -p /var/www/html/storage/app/public/activity_files \
 COPY nginx.conf /etc/nginx/sites-available/default
 RUN rm /etc/nginx/sites-enabled/default \
     && ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-
-#RUN npm ci || (rm -rf node_modules package-lock.json && npm install)
-
-#COPY clean.sh /clean.sh
-#RUN chmod +x /clean.sh
-#RUN ./clean.sh
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
