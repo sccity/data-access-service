@@ -41,14 +41,14 @@ class TokenController extends Controller
             'expires_at' => $validated['expires_at']
         ]);
 
-        return redirect()->route('tokens.index')
+        return redirect()->route('admin.tokens.index')
             ->with('success', 'Token created successfully. Please copy your token: ' . $token->token);
     }
 
     public function destroy(ApiToken $token)
     {
         $token->delete();
-        return redirect()->route('tokens.index')
+        return redirect()->route('admin.tokens.index')
             ->with('success', 'Token deleted successfully');
     }
 }
