@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance API Documentation</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --text-color: #333;
+            --light-text: #7f8c8d;
+            --border-radius: 6px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            box-shadow: var(--box-shadow);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        main {
+            padding: 40px 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 30px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 10px;
+            color: var(--dark-color);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .endpoint {
+            margin-bottom: 40px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            border-left: 5px solid var(--secondary-color);
+        }
+        
+        .endpoint h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 10px;
+            border-radius: var(--border-radius);
+            background-color: var(--success-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .url {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-size: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .params-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .params-table th, .params-table td {
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .params-table th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .params-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .code-block {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 5px 15px;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+        
+        .code-block pre {
+            margin: 0;
+        }
+        
+        .note {
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            background-color: #fdf7f7;
+            margin: 15px 0;
+        }
+        
+        .note-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Finance API</div>
+            <div>Documentation v1.0</div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="section">
+            <h1>Finance API Documentation</h1>
+            
+            <h2>Overview</h2>
+            <p>The Finance API provides endpoints to access financial data related to expenses, revenue, budgets, past due accounts, and employee information. All endpoints are accessible via HTTP GET requests.</p>
+            
+            <h2>Authentication</h2>
+            <p>Most endpoints allow read access without authentication. However, create, update, and delete operations require authentication with admin privileges (email: admin@santaclarautah.gov).</p>
+            
+            <h2>Base URL</h2>
+            <div class="code-block">
+                <pre>/api/finance</pre>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Endpoints</h2>
+            
+            <div class="endpoint">
+                <h3>1. Expense Details</h3>
+                <div>
+                    <span class="method">GET</span>
+                    <span class="url">/expense</span>
+                </div>
+                <p>Retrieves detailed information about expenses.</p>
+                
+                <h4>Query Parameters</h4>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>fund</td>
+                            <td>Integer</td>
+                            <td>No</td>
+                            <td>Filter by fund number</td>
+                        </tr>
+                        <tr>
+                            <td>gl</td>
+                            <td>String</td>
+                            <td>No</td>
+                            <td>Filter by GL account number</td>
+                        </tr>
+                        <tr>
+                            <td>start_date</td>
+                            <td>String (YYYY-MM-DD)</td>
+                            <td>No</td>
+                            <td>Start date for filtering</td>
+                        </tr>
+                        <tr>
+                            <td>end_date</td>
+                            <td>String (YYYY-MM-DD)</td>
+                            <td>No</td>
+                            <td>End date for filtering</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>Response</h4>
+                <div class="code-header">JSON Response</div>
+                <div class="code-block">
+<pre>[
+  {
+    "fund_no": 10,
+    "gl_account": "10-4000-100",
+    "account_name": "General Fund Expenses",
+    "type": "Invoice",
+    "description": "Office Supplies",
+    "date": "2023-06-15",
+    "amount": "245.67"
+  },
+  ...
+]</pre>
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <h3>2. Past Due Accounts</h3>
+                <div>
+                    <span class="method">GET</span>
+                    <span class="url">/pastdue</span>
+                </div>
+                <p>Retrieves information about past due accounts based on the calculated balance date (typically 2 months prior to the current month).</p>
+                
+                <h4>Response</h4>
+                <div class="code-header">JSON Response</div>
+                <div class="code-block">
+<pre>{
+  "summary": {
+    "balance_date": "2023-04-25",
+    "total_accounts": 42
+  },
+  "data": [
+    {
+      "AccountNo": "12345",
+      "Location": "Main St",
+      "Customer": "John Doe",
+      "Address1": "123 Main St",
+      "Address2": "Apt 4B",
+      "City": "Santa Clara",
+      "State": "UT",
+      "Zip": "84765",
+      "PrimaryPhone": "555-123-4567",
+      "SecondaryPhone": "555-987-6543",
+      "PrimaryEmail": "john.doe@example.com",
+      "SecondaryEmail": "jdoe@work.com",
+      "NoPenalty": 0,
+      "NoDisconnect": 0,
+      "DelinquentAmount": "120.45",
+      "Balance": "325.78"
+    },
+    ...
+  ]
+}</pre>
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <h3>3. Revenue Details</h3>
+                <div>
+                    <span class="method">GET</span>
+                    <span class="url">/revenue</span>
+                </div>
+                <p>Retrieves detailed information about revenue.</p>
+                
+                <h4>Query Parameters</h4>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>fund</td>
+                            <td>Integer</td>
+                            <td>No</td>
+                            <td>Filter by fund number</td>
+                        </tr>
+                        <tr>
+                            <td>gl</td>
+                            <td>String</td>
+                            <td>No</td>
+                            <td>Filter by GL account number</td>
+                        </tr>
+                        <tr>
+                            <td>start_date</td>
+                            <td>String (YYYY-MM-DD)</td>
+                            <td>No</td>
+                            <td>Start date for filtering</td>
+                        </tr>
+                        <tr>
+                            <td>end_date</td>
+                            <td>String (YYYY-MM-DD)</td>
+                            <td>No</td>
+                            <td>End date for filtering</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>Response</h4>
+                <div class="code-header">JSON Response</div>
+                <div class="code-block">
+<pre>[
+  {
+    "fund_no": 10,
+    "gl_account": "10-3000-100",
+    "account_name": "General Fund Revenue",
+    "type": "Payment",
+    "description": "Property Tax",
+    "date": "2023-06-15",
+    "amount": "1245.67"
+  },
+  ...
+]</pre>
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <h3>4. Budget Information</h3>
+                <div>
+                    <span class="method">GET</span>
+                    <span class="url">/budget</span>
+                </div>
+                <p>Retrieves budget information.</p>
+                
+                <h4>Query Parameters</h4>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>fy</td>
+                            <td>Integer</td>
+                            <td>No</td>
+                            <td>Filter by fiscal year</td>
+                        </tr>
+                        <tr>
+                            <td>fund</td>
+                            <td>Integer</td>
+                            <td>No</td>
+                            <td>Filter by fund number</td>
+                        </tr>
+                        <tr>
+                            <td>gl</td>
+                            <td>String</td>
+                            <td>No</td>
+                            <td>Filter by GL account number</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>Response</h4>
+                <div class="code-header">JSON Response</div>
+                <div class="code-block">
+<pre>[
+  {
+    "fund_no": 10,
+    "gl_account": "10-4000-100",
+    "account_name": "General Fund Expenses",
+    "type": "Expense",
+    "budget_year": "2023-06-30",
+    "amount": "50000.00"
+  },
+  ...
+]</pre>
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <h3>5. Employee Information</h3>
+                <div>
+                    <span class="method">GET</span>
+                    <span class="url">/employee</span>
+                </div>
+                <p>Retrieves employee information.</p>
+                
+                <h4>Query Parameters</h4>
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>hire_date_start</td>
+                            <td>String (YYYY-MM-DD)</td>
+                            <td>No</td>
+                            <td>Filter by hire date start</td>
+                        </tr>
+                        <tr>
+                            <td>hire_date_end</td>
+                            <td>String (YYYY-MM-DD)</td>
+                            <td>No</td>
+                            <td>Filter by hire date end</td>
+                        </tr>
+                        <tr>
+                            <td>status</td>
+                            <td>Integer</td>
+                            <td>No</td>
+                            <td>Filter by employment status (1 for Active, 0 for Terminated). Defaults to Active if not specified.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>Response</h4>
+                <div class="code-header">JSON Response</div>
+                <div class="code-block">
+<pre>[
+  {
+    "first_name": "Jane",
+    "middle_name": "Marie",
+    "last_name": "Smith",
+    "department": "Finance",
+    "position": "Accountant",
+    "type": "Full-time",
+    "hire_date": "2020-03-15",
+    "rehire_date": "2020-03-15",
+    "termination_date": "2023-12-31",
+    "status": "Active"
+  },
+  ...
+]</pre>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>Data Connections</h2>
+            <p>All endpoints connect to the 'finance' database connection as specified in the application configuration.</p>
+            
+            <h2>Notes</h2>
+            <div class="note">
+                <div class="note-title">Important Information</div>
+                <ol>
+                    <li>All monetary values are formatted to 2 decimal places.</li>
+                    <li>All dates are returned in the format YYYY-MM-DD.</li>
+                    <li>Revenue amounts are multiplied by -1 to represent a positive value.</li>
+                    <li>By default, the Employee endpoint only returns active employees unless specified otherwise.</li>
+                </ol>
+            </div>
+            
+            <h2>Error Handling</h2>
+            <p>The API will return appropriate HTTP status codes:</p>
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>Status Code</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>200</td>
+                        <td>Successful request</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>Bad request (invalid parameters)</td>
+                    </tr>
+                    <tr>
+                        <td>401</td>
+                        <td>Unauthorized (for protected operations)</td>
+                    </tr>
+                    <tr>
+                        <td>500</td>
+                        <td>Server error</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>For any implementation questions or issues, please contact the development team.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Finance API Documentation</p>
+        </div>
+    </footer>
+</body>
+</html> 
